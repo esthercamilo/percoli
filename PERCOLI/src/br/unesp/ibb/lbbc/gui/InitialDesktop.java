@@ -26,6 +26,10 @@ import br.unesp.ibb.lbbc.model.Acessos;
 import br.unesp.ibb.lbbc.persistence.Entidade;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
+import javax.swing.JSplitPane;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 public class InitialDesktop {
 
@@ -46,7 +50,7 @@ public class InitialDesktop {
 		InitialDesktop window = new InitialDesktop();
 		
 		window.frmPercoliPercolation.setVisible(true);
-		window.frmPercoliPercolation.setExtendedState(6);
+		//window.frmPercoliPercolation.setExtendedState(6);
 		
 		
 		/*EventQueue.invokeLater(new Runnable() {

@@ -28,7 +28,6 @@ public class PercoliTreeModel implements TreeModel {
 
 	@Override
 	public Object getChild(Object arg0, int arg1) {
-		arg0=getRoot();
 		if (arg1==0){return "ppi";}
 		else if (arg1==1){return "reg";}
 		else if (arg1==2){return "met";}
@@ -56,7 +55,7 @@ public class PercoliTreeModel implements TreeModel {
 
 	@Override
 	public boolean isLeaf(Object arg0) {
-		// TODO Auto-generated method stub
+		if (arg0!=getRoot()){return true;}
 		return false;
 	}
 
