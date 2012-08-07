@@ -1,13 +1,14 @@
 package testes;
 
+import br.unesp.ibb.lbbc.control.Attributes;
 import br.unesp.ibb.lbbc.control.Percolation;
 
 public class Teste {
 
 	
 	public Teste(){
-		Percolation percolation = new Percolation("ppi");
-		percolation.calculateImpact("D");
+		Attributes att = new Attributes();
+		att.calculateDamage();
 	}
 	
 	
