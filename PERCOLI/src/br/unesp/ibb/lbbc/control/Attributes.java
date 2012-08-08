@@ -2,8 +2,12 @@ package br.unesp.ibb.lbbc.control;
 
 import java.awt.Component;
 import java.awt.image.ComponentSampleModel;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -22,18 +26,30 @@ public class Attributes {
 
 	String att;
 	Entidade ent = new Entidade();
-
+	Graph<Gene, Gene[]> graph = new DirectedSparseGraph<>();
+	HashMap<String, Double> mapDamage = new HashMap<>();
+	
+	Formatter formater;
+	
 	public Attributes() {
 
+		try {
+			formater = new Formatter(new File("C:\\Users\\esther\\Desktop\\ProjetosTestes\\teste1\\damage.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	public void calculateDamage() {
 		// for while only to regulation
 
 		List<REG> regList = ent.findAll(REG.class);
-		Graph<Gene, Gene[]> graph = new DirectedSparseGraph<>();
+		
 
-		for (REG reg : regList) {
+		for (REG reg : regList) {  //para cada linha na tabela reg
 			Gene[] e = { reg.getGene1(), reg.getGene2() };
 			Gene v1 = reg.getGene1();
 			Gene v2 = reg.getGene2();
@@ -41,29 +57,55 @@ public class Attributes {
 		}
 
 		Collection<Gene> listGenes = graph.getVertices();
-		System.out.println("How many genes there are " + listGenes.size());
-
-		int graphMaior = getBiggestGraph(graph);
 		
-		System.out.println("Graph maior "+graphMaior);
+		int graphMaior = getBiggestGraph(graph);
+	//	System.out.println("graphMaior "+graphMaior);
 		
 		Gene[] initial = new Gene[listGenes.size()]; //empty array
 		Gene[] arrayGenes = listGenes.toArray(initial); //create a list of genes
-	
-
 		
-		//for (Gene gene: arrayGenes){
+		for (int i =0; i<arrayGenes.length;i++){
+			Graph<Gene, Gene[]> newGraph = new DirectedSparseGraph<>();
+			
+			
+//****************VAI FICAR SUPER LERDO porque reconstruindo a rede toda vez que vai deletar um gene
+			
+			
+			for (REG reg : regList) {  //para cada linha na tabela reg
+				Gene[] e = { reg.getGene1(), reg.getGene2() };
+				Gene v1 = reg.getGene1();
+				Gene v2 = reg.getGene2();
+				newGraph.addEdge(e, v1, v2);
+			}
+			
+//********************************************************************************************************			
+			
+			
+			newGraph.removeVertex(arrayGenes[i]);
+			int tamanhoDeste = getBiggestGraph(newGraph);
+			//System.out.println("tamanhoDeste "+tamanhoDeste);
+			double damage = 100.00000-(tamanhoDeste*100/graphMaior);
+			//System.out.println(arrayGenes[i].getName()+"   "+damage );
+			mapDamage.put(arrayGenes[i].getName(), damage);
+			
+		}
+		
+		
+		for (String key:mapDamage.keySet()){
+			formater.format("%s,%2.10f\n",key,mapDamage.get(key));	
+		}
+		
+		formater.close();
+		
+/*		for (Gene gene: arrayGenes){
 		Graph<Gene, Gene[]> newGraph = graph;
-		System.out.println(arrayGenes[5].getName());
-		newGraph.removeVertex(arrayGenes[5]);
-		
+		newGraph.removeVertex(gene);
 		int tamanhoDeste = getBiggestGraph(newGraph);
-		System.out.println("o tamanho deste eh " + tamanhoDeste);
-		//}
-	}
-
-	public void calculateDegree() {
-
+		System.out.println("tamanhoDeste "+tamanhoDeste);
+		double damage = tamanhoDeste*100/graphMaior;
+		System.out.println(gene.getName()+"   "+damage );
+	
+		}*/	
 	}
 
 	// return the index of the biggest graph
@@ -71,7 +113,6 @@ public class Attributes {
 		
 		ArrayList<Set<Gene>> list = Components.getAllConnectedComponent(graph);
 
-		// Catch the biggest index
 		int lenght = list.size();
 		int maior = 0;
 		int index = 0;
@@ -84,7 +125,7 @@ public class Attributes {
 		}
 		// Size of the biggest initial graph
 		int tamanhoDoMaior = list.get(index).size();
-		return index;
+		return tamanhoDoMaior;
 
 	}
 }

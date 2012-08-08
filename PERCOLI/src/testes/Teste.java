@@ -1,7 +1,6 @@
 package testes;
 
 import br.unesp.ibb.lbbc.control.Attributes;
-import br.unesp.ibb.lbbc.control.Percolation;
 
 public class Teste {
 
