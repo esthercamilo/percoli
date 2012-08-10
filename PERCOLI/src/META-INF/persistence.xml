@@ -9,6 +9,7 @@
 		<class>br.unesp.ibb.lbbc.model.PPI</class>
 		<class>br.unesp.ibb.lbbc.model.REG</class>
 		<class>br.unesp.ibb.lbbc.model.MET</class>
+		<class>br.unesp.ibb.lbbc.model.Ingi</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/percolidatabase" />
 			<property name="javax.persistence.jdbc.user" value="root" />

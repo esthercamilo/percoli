@@ -1,7 +1,5 @@
 package br.unesp.ibb.lbbc.control;
 
-import java.awt.Component;
-import java.awt.image.ComponentSampleModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -11,16 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import edu.uci.ics.jung.algorithms.filters.FilterUtils;
-import edu.uci.ics.jung.algorithms.filters.KNeighborhoodFilter;
-import edu.uci.ics.jung.graph.DirectedSparseGraph;
-import edu.uci.ics.jung.graph.Graph;
-import edu.uci.ics.jung.graph.event.GraphEvent.Edge;
-
 import agape.tools.Components;
 import br.unesp.ibb.lbbc.model.Gene;
 import br.unesp.ibb.lbbc.model.REG;
 import br.unesp.ibb.lbbc.persistence.Entidade;
+import edu.uci.ics.jung.graph.DirectedSparseGraph;
+import edu.uci.ics.jung.graph.Graph;
 
 public class Attributes {
 
@@ -68,7 +62,7 @@ public class Attributes {
 			Graph<Gene, Gene[]> newGraph = new DirectedSparseGraph<>();
 			
 			
-//****************VAI FICAR SUPER LERDO porque reconstruindo a rede toda vez que vai deletar um gene
+//****************VAI FICAR SUPER LERDO porque reconstroi a rede toda vez que vai deletar um gene
 			
 			
 			for (REG reg : regList) {  //para cada linha na tabela reg
@@ -84,7 +78,8 @@ public class Attributes {
 			newGraph.removeVertex(arrayGenes[i]);
 			int tamanhoDeste = getBiggestGraph(newGraph);
 			//System.out.println("tamanhoDeste "+tamanhoDeste);
-			double damage = 100.00000-(tamanhoDeste*100/graphMaior);
+			
+			double damage = 100.00000-((double)tamanhoDeste*100/graphMaior);
 			//System.out.println(arrayGenes[i].getName()+"   "+damage );
 			mapDamage.put(arrayGenes[i].getName(), damage);
 			
@@ -92,20 +87,12 @@ public class Attributes {
 		
 		
 		for (String key:mapDamage.keySet()){
-			formater.format("%s,%2.10f\n",key,mapDamage.get(key));	
+			formater.format("%s;%2.10f\n",key,mapDamage.get(key));	
 		}
 		
 		formater.close();
 		
-/*		for (Gene gene: arrayGenes){
-		Graph<Gene, Gene[]> newGraph = graph;
-		newGraph.removeVertex(gene);
-		int tamanhoDeste = getBiggestGraph(newGraph);
-		System.out.println("tamanhoDeste "+tamanhoDeste);
-		double damage = tamanhoDeste*100/graphMaior;
-		System.out.println(gene.getName()+"   "+damage );
-	
-		}*/	
+
 	}
 
 	// return the index of the biggest graph
