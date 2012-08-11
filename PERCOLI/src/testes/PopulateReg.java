@@ -5,12 +5,12 @@ import br.unesp.ibb.lbbc.control.PopulateInitialDatabase;
 public class PopulateReg {
 
 	
-	PopulateInitialDatabase pop = new PopulateInitialDatabase("teste1");
+	PopulateInitialDatabase pop = new PopulateInitialDatabase();
 	
 	
 	public PopulateReg(){
 		
-		
+		pop.populateIngi();
 		
 	}
 	

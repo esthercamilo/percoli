@@ -50,27 +50,7 @@ public class InitialDesktop {
 		InitialDesktop window = new InitialDesktop();
 		
 		window.frmPercoliPercolation.setVisible(true);
-		//window.frmPercoliPercolation.setExtendedState(6);
 		
-		
-		/*EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					
-					InitialDesktop window = new InitialDesktop();
-					Entidade entidade = new Entidade();
-					Acessos ac = new Acessos();
-					ac.setDate(Calendar.DATE);
-					entidade.inserirObjeto(ac);
-					
-					window.frmPercoliPercolation.setVisible(true);
-					window.frmPercoliPercolation.setExtendedState(6);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});*/
 	}
 
 	public static JFrame getFrmPercoliPercolation() {
@@ -128,6 +108,39 @@ public class InitialDesktop {
 
 		JMenuItem mniExit = new JMenuItem("Exit");
 		mnFile.add(mniExit);
+		
+		JMenu mnEdit = new JMenu("Edit");
+		menuBar.add(mnEdit);
+		
+		JMenuItem mntmRedo = new JMenuItem("Redo");
+		mnEdit.add(mntmRedo);
+		
+		JMenuItem mntmUndo = new JMenuItem("Undo");
+		mnEdit.add(mntmUndo);
+		
+		JMenuItem mntmFind = new JMenuItem("Find");
+		mnEdit.add(mntmFind);
+		
+		JMenu mnCalculations = new JMenu("Calculations");
+		menuBar.add(mnCalculations);
+		
+		JMenuItem mntmDamage = new JMenuItem("Damage");
+		mnCalculations.add(mntmDamage);
+		
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+		
+		JMenuItem mntmDecisionTree = new JMenuItem("Decision Tree");
+		mnView.add(mntmDecisionTree);
+		
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mnHelp.add(mntmSearch);
+		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mnHelp.add(mntmAbout);
 
 		txtLbbcLaboratrio = new JTextField();
 		txtLbbcLaboratrio.setFont(new Font("Times New Roman", Font.PLAIN, 10));
@@ -170,40 +183,6 @@ public class InitialDesktop {
 		
 		toolBarPercolation = new JToolBar();
 		toolBar.add(toolBarPercolation);
-		JButton btnNewButton_4 = new JButton("");
-		btnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				PopulateInitialDatabase pop = new PopulateInitialDatabase("teste1");
-				pop.populatePPI();
-				pop.populateREG();
-				pop.populateMET();
-				JOptionPane.showMessageDialog(null,"The data were stored in database");
-				
-				PercoliDataDialog per = new PercoliDataDialog();
-				
-				
-			}
-		});
-		btnNewButton_4.setToolTipText("Calculate percolation");
-		btnNewButton_4.setIcon(new ImageIcon(InitialDesktop.class.getResource("/images/perc.png")));
-		toolBarPercolation.add(btnNewButton_4);
-		
-		//Lembrete: tirar o comentario do comando abaixo
-		//toolBarPercolation.setVisible(false);
-		
-		
-		//TESTES
-		
-		JButton btnNewButton_5 = new JButton("TESTES");
-		btnNewButton_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				
-			}
-		});
-		toolBar.add(btnNewButton_5);
 		
 		
 	

@@ -440,20 +440,20 @@ public class NewProjectDialog extends JDialog {
 		InitialDesktop.getFrmPercoliPercolation().setVisible(true);
 		InitialDesktop.getFrmPercoliPercolation().setAutoRequestFocus(true);
 		
-		setPerspective();
-		
-		
-		
-		
-	
+		setPerspective(newproject.getName());
+		PopulateInitialDatabase pop = new PopulateInitialDatabase();
+		pop.populateGenome(newproject.getName());
+		pop.populatePPI(newproject.getName());
+		pop.populateREG(newproject.getName());
+		pop.populateMET(newproject.getName());
+		pop.populateIngi();
 	}
 
-	private static void setPerspective() {
-		InitialDesktop.getFrmPercoliPercolation().getContentPane().add(new SplitDesktop("teste1"), BorderLayout.CENTER);
+	private static void setPerspective(String projName) {
+		InitialDesktop.getFrmPercoliPercolation().getContentPane().add(new SplitDesktop(projName), BorderLayout.CENTER);
 		InitialDesktop.getToolBarPercolation().setVisible(true);
 		InitialDesktop.getFrmPercoliPercolation().revalidate();
-		
-		
+	
 	}
 	
 	
