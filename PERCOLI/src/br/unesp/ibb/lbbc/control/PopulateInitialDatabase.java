@@ -1,6 +1,7 @@
 package br.unesp.ibb.lbbc.control;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,16 +18,14 @@ import br.unesp.ibb.lbbc.persistence.Entidade;
 
 public class PopulateInitialDatabase {
 
-	
 	public PopulateInitialDatabase() {
 		Entidade ent = new Entidade();
-		
+
 	}
 
-	
-	public void populateGenome(String projectName){
-		
-		Entidade ent = new Entidade();
+	public void populateGenome(String projectName) {
+
+	/*	Entidade ent = new Entidade();
 		NewProject fileName = (NewProject) ent.findProjectByName(projectName);
 		try {
 			FileReader fileGenome = new FileReader(fileName.getFileGenome());
@@ -40,16 +39,16 @@ public class PopulateInitialDatabase {
 				gene.setId(i);
 				gene.setName(dado[0]);
 				gene.setPercolation(0.0);
-			
+
 				ent.inserirObjeto(gene);
 				i = i + 1;
 			}
 			in.close();
 		} catch (IOException e) {
 		}
-		ent.close();
+		ent.close();*/
 	}
-	
+
 	public void populatePPI(String projectName) {
 		Entidade ent = new Entidade();
 		NewProject fileName = (NewProject) ent.findProjectByName(projectName);
@@ -64,7 +63,7 @@ public class PopulateInitialDatabase {
 				PPI ppi = new PPI();
 
 				Gene gene1 = (Gene) ent.findGeneByName(dado[0]);
-				Gene gene2 = (Gene) ent.findGeneByName(dado[1]);				
+				Gene gene2 = (Gene) ent.findGeneByName(dado[1]);
 
 				ppi.setId(i);
 				ppi.setGene1(gene1);
@@ -80,14 +79,13 @@ public class PopulateInitialDatabase {
 
 	}
 
-	
 	public void populateREG(String projectName) {
-		
+
 		Entidade ent = new Entidade();
 		NewProject fileName = (NewProject) ent.findProjectByName(projectName);
 		Boolean inhibits = true;
 		try {
-			
+
 			FileReader fileReg = new FileReader(fileName.getFileREG());
 			BufferedReader in = new BufferedReader(fileReg);
 			String str;
@@ -97,12 +95,11 @@ public class PopulateInitialDatabase {
 				String[] dado = str.split("\t");
 				REG reg = new REG();
 
-				
 				try {
 					Gene gene1 = (Gene) ent.findGeneByName(dado[0]);
 					Gene gene2 = (Gene) ent.findGeneByName(dado[1]);
-				//	if (dado[2].contains("-")){inhibits = false;}
-				//	else {inhibits = true;}
+					// if (dado[2].contains("-")){inhibits = false;}
+					// else {inhibits = true;}
 					reg.setId(i);
 					reg.setGene1(gene1);
 					reg.setGene2(gene2);
@@ -110,17 +107,14 @@ public class PopulateInitialDatabase {
 
 					ent.inserirObjeto(reg);
 					i = i + 1;
-					
-					
-					
+
 				} catch (NonUniqueResultException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					System.out.println(dado[0]+" e "+dado[1]);
-					
+					System.out.println(dado[0] + " e " + dado[1]);
+
 				}
-				
-				
+
 			}
 			in.close();
 			ent.close();
@@ -129,7 +123,6 @@ public class PopulateInitialDatabase {
 
 	}
 
-	
 	public void populateMET(String projectName) {
 		Entidade ent = new Entidade();
 		NewProject fileName = (NewProject) ent.findProjectByName(projectName);
@@ -152,7 +145,7 @@ public class PopulateInitialDatabase {
 
 				ent.inserirObjeto(met);
 				i = i + 1;
-				
+
 			}
 			ent.close();
 			in.close();
@@ -160,40 +153,78 @@ public class PopulateInitialDatabase {
 		}
 
 	}
-	
-	public void populateIngi(){
-		Entidade ent =new Entidade();
+
+	public void populateIngi() {
+		Entidade ent = new Entidade();
 		List<PPI> ppiList = ent.findAll(PPI.class);
 		List<REG> regList = ent.findAll(REG.class);
 		List<MET> metList = ent.findAll(MET.class);
 
 		int Id = 1;
-		for (PPI elem: ppiList){
+		for (PPI elem : ppiList) {
 			Ingi ingi = new Ingi();
 			ingi.setId(Id);
 			ingi.setGeneA(elem.getGene1());
 			ingi.setGeneB(elem.getGene2());
 			ent.inserirObjeto(ingi);
-			Id = Id+1;
+			Id = Id + 1;
 		}
-		
-		for (REG elem: regList){
+
+		for (REG elem : regList) {
 			Ingi ingi = new Ingi();
 			ingi.setId(Id);
 			ingi.setGeneA(elem.getGene1());
 			ingi.setGeneB(elem.getGene2());
 			ent.inserirObjeto(ingi);
-			Id = Id+1;
+			Id = Id + 1;
 		}
-		
-		for (MET elem: metList){
+
+		for (MET elem : metList) {
 			Ingi ingi = new Ingi();
 			ingi.setId(Id);
 			ingi.setGeneA(elem.getGene1());
 			ingi.setGeneB(elem.getGene2());
 			ent.inserirObjeto(ingi);
-			Id = Id+1;
+			Id = Id + 1;
 		}
 		ent.close();
+	}
+
+	/**
+	 * Populate database from genes.dat
+	 * */
+	
+	public void populateGeneFromEcocyc(String file){
+		FileReader fileReader;
+		BufferedReader in ;
+		int i =1;
+		try {
+			fileReader = new FileReader(file);
+			in = new BufferedReader(fileReader);	
+			while (in.ready()) {
+				String a = in.readLine();
+				if (0 == a.indexOf("#")){
+					continue;
+				}
+				else if (0 == a.indexOf("//")){
+					i=1;
+				}
+				else{
+					String str = in.readLine();
+					String[] dado = str.split(" - ");
+					
+				}
+			}
+			
+			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 }

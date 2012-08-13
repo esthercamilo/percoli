@@ -121,6 +121,12 @@ public class InitialDesktop {
 		JMenuItem mntmFind = new JMenuItem("Find");
 		mnEdit.add(mntmFind);
 		
+		JMenu mnDatabase = new JMenu("Database");
+		menuBar.add(mnDatabase);
+		
+		JMenuItem mntmImportGeneData = new JMenuItem("Import Gene Data");
+		mnDatabase.add(mntmImportGeneData);
+		
 		JMenu mnCalculations = new JMenu("Calculations");
 		menuBar.add(mnCalculations);
 		
@@ -183,6 +189,17 @@ public class InitialDesktop {
 		
 		toolBarPercolation = new JToolBar();
 		toolBar.add(toolBarPercolation);
+		
+		JButton btnNewButton_4 = new JButton("");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PopulateInitialDatabase pop = new PopulateInitialDatabase();
+				
+			}
+		});
+		btnNewButton_4.setToolTipText("Populate gene database");
+		btnNewButton_4.setIcon(new ImageIcon(InitialDesktop.class.getResource("/images/gen.png")));
+		toolBarPercolation.add(btnNewButton_4);
 		
 		
 	
