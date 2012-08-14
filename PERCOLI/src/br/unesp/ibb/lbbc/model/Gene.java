@@ -7,56 +7,51 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
+import br.unesp.ibb.lbbc.persistence.Entidade;
+
 //@Embeddable
 @Entity
 
 @NamedQueries({
-	@NamedQuery(name = "findGeneByName", query = "SELECT c FROM Gene c WHERE c.COMMONNAME =:nameGene")
+	@NamedQuery(name = "findGeneByName", query = "SELECT c FROM Gene c WHERE c.COMMONNAME =:nameGene"),
+	@NamedQuery(name = "findGeneBySynonym", query = "SELECT c FROM Gene c WHERE c.SYNONYMS =:synonymGene"),
+	
 
 })
 
 public class Gene {
 
-	@SequenceGenerator(name="gene", initialValue=1, allocationSize=100)
+	//@SequenceGenerator(name="gene", initialValue=1, allocationSize=100)
 	@Id
 	String UNIQUEID;
-	String TYPES;
 	String COMMONNAME;
 	String ACCESSION1;
 	String ACCESSION2;
 	String CENTISOMEPOSITION;
-	String CITATIONS;
-	String COMMENT;
-	String COMPONENTOF;
-	String CREDITS;
-	String DATASOURCE;
-	String DBLINKS;
-	String DOCUMENTATION;
-	String HIDESLOT;
-	String INPARALOGOUSGENGROUP;
+	String INPARALOGOUSGENEGROUP;
 	String INTERRUPTED;
 	String KNOCKOUTGROWTHOBSERVATIONS;
-	long LASTUPDATE;
 	long LEFTENDPOSITION;
 	String MEMBERSORTFN;
 	String PRODUCT;
 	String REGULATEDBY;
 	long RIGHTENDPOSITION;
-	String SYNCWORTHOLOG;
 	String SYNONYMS;
 	String TRANSCRIPTIONDIRECTION;
 	double damage;
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getUNIQUEID() {
 		return UNIQUEID;
 	}
 	public void setUNIQUEID(String uNIQUEID) {
 		UNIQUEID = uNIQUEID;
-	}
-	public String getTYPES() {
-		return TYPES;
-	}
-	public void setTYPES(String tYPES) {
-		TYPES = tYPES;
 	}
 	public String getCOMMONNAME() {
 		return COMMONNAME;
@@ -82,59 +77,12 @@ public class Gene {
 	public void setCENTISOMEPOSITION(String cENTISOMEPOSITION) {
 		CENTISOMEPOSITION = cENTISOMEPOSITION;
 	}
-	public String getCITATIONS() {
-		return CITATIONS;
+	
+	public String getINPARALOGOUSGENEGROUP() {
+		return INPARALOGOUSGENEGROUP;
 	}
-	public void setCITATIONS(String cITATIONS) {
-		CITATIONS = cITATIONS;
-	}
-	public String getCOMMENT() {
-		return COMMENT;
-	}
-	public void setCOMMENT(String cOMMENT) {
-		COMMENT = cOMMENT;
-	}
-	public String getCOMPONENTOF() {
-		return COMPONENTOF;
-	}
-	public void setCOMPONENTOF(String cOMPONENTOF) {
-		COMPONENTOF = cOMPONENTOF;
-	}
-	public String getCREDITS() {
-		return CREDITS;
-	}
-	public void setCREDITS(String cREDITS) {
-		CREDITS = cREDITS;
-	}
-	public String getDATASOURCE() {
-		return DATASOURCE;
-	}
-	public void setDATASOURCE(String dATASOURCE) {
-		DATASOURCE = dATASOURCE;
-	}
-	public String getDBLINKS() {
-		return DBLINKS;
-	}
-	public void setDBLINKS(String dBLINKS) {
-		DBLINKS = dBLINKS;
-	}
-	public String getDOCUMENTATION() {
-		return DOCUMENTATION;
-	}
-	public void setDOCUMENTATION(String dOCUMENTATION) {
-		DOCUMENTATION = dOCUMENTATION;
-	}
-	public String getHIDESLOT() {
-		return HIDESLOT;
-	}
-	public void setHIDESLOT(String hIDESLOT) {
-		HIDESLOT = hIDESLOT;
-	}
-	public String getINPARALOGOUSGENGROUP() {
-		return INPARALOGOUSGENGROUP;
-	}
-	public void setINPARALOGOUSGENGROUP(String iNPARALOGOUSGENGROUP) {
-		INPARALOGOUSGENGROUP = iNPARALOGOUSGENGROUP;
+	public void setINPARALOGOUSGENEGROUP(String iNPARALOGOUSGENEGROUP) {
+		INPARALOGOUSGENEGROUP = iNPARALOGOUSGENEGROUP;
 	}
 	public String getINTERRUPTED() {
 		return INTERRUPTED;
@@ -147,12 +95,6 @@ public class Gene {
 	}
 	public void setKNOCKOUTGROWTHOBSERVATIONS(String kNOCKOUTGROWTHOBSERVATIONS) {
 		KNOCKOUTGROWTHOBSERVATIONS = kNOCKOUTGROWTHOBSERVATIONS;
-	}
-	public long getLASTUPDATE() {
-		return LASTUPDATE;
-	}
-	public void setLASTUPDATE(long lASTUPDATE) {
-		LASTUPDATE = lASTUPDATE;
 	}
 	public long getLEFTENDPOSITION() {
 		return LEFTENDPOSITION;
@@ -184,12 +126,6 @@ public class Gene {
 	public void setRIGHTENDPOSITION(long rIGHTENDPOSITION) {
 		RIGHTENDPOSITION = rIGHTENDPOSITION;
 	}
-	public String getSYNCWORTHOLOG() {
-		return SYNCWORTHOLOG;
-	}
-	public void setSYNCWORTHOLOG(String sYNCWORTHOLOG) {
-		SYNCWORTHOLOG = sYNCWORTHOLOG;
-	}
 	public String getSYNONYMS() {
 		return SYNONYMS;
 	}
@@ -210,6 +146,29 @@ public class Gene {
 	}
 
 
+	public static Gene initGene() {
+		Gene gene = new Gene();
+		gene.setUNIQUEID("");
+		gene.setCOMMONNAME("");
+		gene.setACCESSION1("");
+		gene.setACCESSION2("");
+		gene.setCENTISOMEPOSITION("");
+		gene.setINPARALOGOUSGENEGROUP("");
+		gene.setINTERRUPTED("");
+		gene.setKNOCKOUTGROWTHOBSERVATIONS("");
+		gene.setLEFTENDPOSITION(0);
+		gene.setMEMBERSORTFN("");
+		gene.setPRODUCT("");
+		gene.setREGULATEDBY("");
+		gene.setRIGHTENDPOSITION(0);
+		gene.setSYNONYMS("");
+		gene.setTRANSCRIPTIONDIRECTION("");
+		gene.setDamage(0);
+		return gene;
+	}
+	
+	
+	
 	
 	
 }

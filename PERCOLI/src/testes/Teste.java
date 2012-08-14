@@ -7,7 +7,7 @@ public class Teste {
 	
 	public Teste(){
 		Attributes att = new Attributes();
-		att.calculateDamage();
+		att.calculateDamageTest();
 	}
 	
 	

@@ -32,8 +32,8 @@ public class Percolation {
 		
 		DirectedSparseGraph<String, String[]> graph = new DirectedSparseGraph<String, String[]>();
 		for (REG reg : listReg){
-			String v1 =reg.getGene1().getName(); 
-			String v2 =reg.getGene2().getName(); 
+			String v1 =reg.getGene1().getCOMMONNAME(); 
+			String v2 =reg.getGene2().getCOMMONNAME(); 
 			String[] e = {v1,v2};
 			graph.addEdge(e, v1, v2);
 		}

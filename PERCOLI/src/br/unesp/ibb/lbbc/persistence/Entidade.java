@@ -71,7 +71,15 @@ public class Entidade {
 
 	}
 	
+	public Object findGeneBySynonym(String name) {
+		try {
+			return bs.getEntityManager().createNamedQuery("findGeneBySynonym")
+					.setParameter("synonymGene",name).getSingleResult();
+		} finally {
+			bs.getEntityManager().close();
+		}
 
+	}
 	
 	// BUSCA POR PESSOA
 	public Object findPessoaByNome(String name) {

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import agape.tools.Components;
 import br.unesp.ibb.lbbc.model.Gene;
+import br.unesp.ibb.lbbc.model.Ingi;
 import br.unesp.ibb.lbbc.model.REG;
 import br.unesp.ibb.lbbc.persistence.Entidade;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
@@ -28,7 +29,7 @@ public class Attributes {
 	public Attributes() {
 
 		try {
-			formater = new Formatter(new File("C:\\Users\\esther\\Desktop\\ProjetosTestes\\teste1\\damage.txt"));
+			formater = new Formatter(new File("C:\\ESTHER\\EXPERIM\\exp1\\damage.txt"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,7 +82,7 @@ public class Attributes {
 			
 			double damage = 100.00000-((double)tamanhoDeste*100/graphMaior);
 			//System.out.println(arrayGenes[i].getName()+"   "+damage );
-			mapDamage.put(arrayGenes[i].getName(), damage);
+			mapDamage.put(arrayGenes[i].getCOMMONNAME(), damage);
 			
 		}
 		
@@ -95,6 +96,66 @@ public class Attributes {
 
 	}
 
+	
+	public void calculateDamageTest() {
+		// for while only to regulation
+
+		List<Ingi> list = ent.findAll(Ingi.class);
+		
+
+		for (Ingi reg : list) {  //para cada linha na tabela reg
+			Gene[] e = { reg.getGeneA(), reg.getGeneB() };
+			Gene v1 = reg.getGeneA();
+			Gene v2 = reg.getGeneB();
+			graph.addEdge(e, v1, v2);
+		}
+
+		Collection<Gene> listGenes = graph.getVertices();
+		
+		int graphMaior = getBiggestGraph(graph);
+	//	System.out.println("graphMaior "+graphMaior);
+		
+		Gene[] initial = new Gene[listGenes.size()]; //empty array
+		Gene[] arrayGenes = listGenes.toArray(initial); //create a list of genes
+		
+		for (int i =0; i<arrayGenes.length;i++){
+			Graph<Gene, Gene[]> newGraph = new DirectedSparseGraph<>();
+			
+			
+//****************VAI FICAR SUPER LERDO porque reconstroi a rede toda vez que vai deletar um gene
+			
+			
+			for (Ingi reg : list) {  //para cada linha na tabela reg
+				Gene[] e = { reg.getGeneA(), reg.getGeneB() };
+				Gene v1 = reg.getGeneA();
+				Gene v2 = reg.getGeneB();
+				newGraph.addEdge(e, v1, v2);
+			}
+			
+//********************************************************************************************************			
+			
+			
+			newGraph.removeVertex(arrayGenes[i]);
+			int tamanhoDeste = getBiggestGraph(newGraph);
+			//System.out.println("tamanhoDeste "+tamanhoDeste);
+			
+			double damage = 100.00000-((double)tamanhoDeste*100/graphMaior);
+			//System.out.println(arrayGenes[i].getName()+"   "+damage );
+			mapDamage.put(arrayGenes[i].getCOMMONNAME(), damage);
+			
+		}
+		
+		
+		for (String key:mapDamage.keySet()){
+			formater.format("%s;%2.10f\n",key,mapDamage.get(key));	
+		}
+		
+		formater.close();
+		
+
+	}
+	
+	
 	// return the index of the biggest graph
 	private int getBiggestGraph(Graph graph) {
 		

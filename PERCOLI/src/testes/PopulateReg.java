@@ -10,9 +10,11 @@ public class PopulateReg {
 	
 	public PopulateReg(){
 		
+		//pop.populateMET("exp1");
 		pop.populateIngi();
 		
 	}
+	
 	
 	
 	public static void main(String[] args) {

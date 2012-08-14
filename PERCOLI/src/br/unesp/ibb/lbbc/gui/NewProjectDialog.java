@@ -442,7 +442,7 @@ public class NewProjectDialog extends JDialog {
 		
 		setPerspective(newproject.getName());
 		PopulateInitialDatabase pop = new PopulateInitialDatabase();
-		pop.populateGenome(newproject.getName());
+		
 		pop.populatePPI(newproject.getName());
 		pop.populateREG(newproject.getName());
 		pop.populateMET(newproject.getName());
