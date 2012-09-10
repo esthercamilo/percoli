@@ -9,6 +9,8 @@ import javax.persistence.SequenceGenerator;
 @Entity
 
 
+
+
 public class REG {
 
 	@Id
@@ -49,5 +51,6 @@ public class REG {
 	public void setGene2(Gene gene2) {
 		this.gene2 = gene2;
 	}
+
 	
 }
