@@ -39,24 +39,29 @@ public class BooleanNetwork extends DirectedSparseGraph<Gene,REG>{
 	}
 
 	
-	public void findSingleAttractors(HashMap<Gene, Boolean> initialState, Gene gene){
+	public HashMap<Gene, Boolean> getNetworkNextState(HashMap<Gene, Boolean> initialState){
 		
-		while (i<numberGenes){
-		boolean f = false;
-		//	if (getGeneState(initialState, gene, booleanNetwork))
-		//boolean t = true;
-		
+		HashMap<Gene, Boolean> map = new HashMap<>();
+		for (Gene gene:initialState.keySet()){
+			boolean newState = getGeneState(initialState, gene);
+			map.put(gene, newState);
 		}
+				
+		return map;
+	}
+	
+	public void findSingleAttractors(){
+		
 		
 		
 	}
 	/**
 	 * 
 	 * */
-	public boolean getGeneState(HashMap<Gene, Boolean> initialState, Gene gene, BooleanNetwork bn){
+	public boolean getGeneState(HashMap<Gene, Boolean> initialState, Gene gene){
 		
 			boolean resultState = initialState.get(gene);
-			Collection<REG> edges = bn.getInEdges(gene);
+			Collection<REG> edges = this.getInEdges(gene);
 			int pos = 0;
 			int neg = 0;
 			for (REG r:edges){

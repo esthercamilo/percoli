@@ -63,19 +63,16 @@ public class TestaBoolean {
 		BooleanNetwork bn = new BooleanNetwork(setReg);
 		HashMap<Gene,Boolean> estados = new HashMap<>();
 		estados.put(g1,true);
-		estados.put(g2,false);
-		estados.put(g3,false);
+		estados.put(g2,true);
+		estados.put(g3,true);
 		estados.put(g4,true);
 		estados.put(g5,true);
 		
-	/*	System.out.println(bn.getGeneState(estados,g1, bn));
-		System.out.println(bn.getGeneState(estados,g2, bn));
-		System.out.println(bn.getGeneState(estados,g3, bn));
-		System.out.println(bn.getGeneState(estados,g4, bn));
-		System.out.println(bn.getGeneState(estados,g5, bn));*/
+		HashMap<Gene,Boolean> novoEstado = bn.getNetworkNextState(estados);
 		
-		
-		
+		for (Gene gene:novoEstado.keySet()){
+			System.out.println(gene.getCOMMONNAME()+"  "+novoEstado.get(gene));
+		}
 		
 	}
 	
