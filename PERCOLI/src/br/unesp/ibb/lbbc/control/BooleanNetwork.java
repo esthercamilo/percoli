@@ -15,9 +15,10 @@ import edu.uci.ics.jung.graph.DirectedSparseGraph;
 @SuppressWarnings("serial")
 public class BooleanNetwork extends DirectedSparseGraph<Gene,REG>{
 	private ArrayList<REG> setOfReg;
-	private Collection<Gene> vertex;
+	private ArrayList<Gene> vertex;
 	int numberGenes;
 	int i = 0;
+	HashMap<Gene, Boolean> keepAttractor;
 	
 	public BooleanNetwork (ArrayList<REG> setOfReg){
 		this.setOfReg = setOfReg;
@@ -27,38 +28,40 @@ public class BooleanNetwork extends DirectedSparseGraph<Gene,REG>{
 			this.addEdge(reg,reg.getGene1(),reg.getGene2());
 		}
 		
-		vertex = this.getVertices();
+		vertex = (ArrayList<Gene>) this.getVertices();
 		numberGenes = vertex.size();
-		
-		
+		keepAttractor = new HashMap<>();
 	}
-	
 	
 	public ArrayList<REG> getSetOfReg() {
 		return setOfReg;
 	}
 
-	
 	public HashMap<Gene, Boolean> getNetworkNextState(HashMap<Gene, Boolean> initialState){
 		
 		HashMap<Gene, Boolean> map = new HashMap<>();
 		for (Gene gene:initialState.keySet()){
-			boolean newState = getGeneState(initialState, gene);
+			boolean newState = getGeneNexState(initialState, gene);
 			map.put(gene, newState);
 		}
 				
 		return map;
 	}
 	
-	public void findSingleAttractors(){
+	public void findSingleAttractors(HashMap<Gene, Boolean> initialState, int g){
+			Gene gene = vertex.get(g);
+			Boolean nextState = getGeneNexState(initialState,gene);
+			if (nextState==initialState.get(gene)){
+				keepAttractor.put(gene,nextState);
+			}
 		
-		
+		boolean f = false;
 		
 	}
 	/**
 	 * 
 	 * */
-	public boolean getGeneState(HashMap<Gene, Boolean> initialState, Gene gene){
+	public boolean getGeneNexState(HashMap<Gene, Boolean> initialState, Gene gene){
 		
 			boolean resultState = initialState.get(gene);
 			Collection<REG> edges = this.getInEdges(gene);
