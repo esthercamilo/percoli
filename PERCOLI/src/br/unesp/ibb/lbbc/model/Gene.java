@@ -2,6 +2,8 @@ package br.unesp.ibb.lbbc.model;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -23,6 +25,16 @@ public class Gene {
 
 	//@SequenceGenerator(name="gene", initialValue=1, allocationSize=100)
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	String UNIQUEID;
 	String COMMONNAME;
 	String ACCESSION1;
@@ -42,10 +54,7 @@ public class Gene {
 	
 	
 	
-	
-	
-	
-	
+
 	
 	public String getUNIQUEID() {
 		return UNIQUEID;

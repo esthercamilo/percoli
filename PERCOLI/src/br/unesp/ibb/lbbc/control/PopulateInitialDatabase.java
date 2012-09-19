@@ -45,6 +45,7 @@ public class PopulateInitialDatabase {
 	public void populatePPI(String projectName) {
 		Entidade ent = new Entidade();
 		NewProject fileName = (NewProject) ent.findProjectByName(projectName);
+		ArrayList<String> missingGenes = new ArrayList<>();
 		try {
 			FileReader filePpi = new FileReader(fileName.getFilePPI());
 			BufferedReader in = new BufferedReader(filePpi);
@@ -67,18 +68,19 @@ public class PopulateInitialDatabase {
 					i = i + 1;
 					
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null,"Missing one of the genes interacting\n "+dado[0]+" or "+dado[1]);
+					missingGenes.add(e.getLocalizedMessage());
+					
 				}
-
-				
-				
-				
-			}
+		}
 			in.close();
 			ent.close();
 		} catch (IOException e) {
 		}
-
+		
+		for (String elem:missingGenes){
+			System.out.println(elem);
+		}
+		
 	}
 
 	public void populateREG(String projectName) {
@@ -98,8 +100,8 @@ public class PopulateInitialDatabase {
 				REG reg = new REG();
 
 				try {
-					Gene gene1 = (Gene) ent.findGeneByName(dado[0]);
-					Gene gene2 = (Gene) ent.findGeneByName(dado[1]);
+					Gene gene1 = (Gene) ent.findGeneByName(dado[0].replaceAll("\\s",""));
+					Gene gene2 = (Gene) ent.findGeneByName(dado[1].replaceAll("\\s",""));
 					// if (dado[2].contains("-")){inhibits = false;}
 					// else {inhibits = true;}
 					reg.setId(i);
@@ -111,7 +113,7 @@ public class PopulateInitialDatabase {
 					i = i + 1;
 
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null,"Missing gene in interaction couple:  \n"+dado[0]+" or "+dado[1]);
+					System.out.println(dado[0]+" or "+dado[1]);
 				}
 
 			}
@@ -240,7 +242,7 @@ public class PopulateInitialDatabase {
 						break;
 
 					case "COMMON-NAME":
-						gene.setCOMMONNAME(dado[1]);
+						gene.setCOMMONNAME(dado[1].toLowerCase());
 						break;
 
 					case "ACCESSION-1":
@@ -306,8 +308,8 @@ public class PopulateInitialDatabase {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null,"Gene file not found");
+			e.printStackTrace(); 
 		}
 
 	}

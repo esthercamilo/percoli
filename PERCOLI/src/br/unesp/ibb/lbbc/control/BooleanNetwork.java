@@ -3,6 +3,9 @@ package br.unesp.ibb.lbbc.control;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import javax.swing.JOptionPane;
 
 import br.unesp.ibb.lbbc.model.Gene;
 import br.unesp.ibb.lbbc.model.REG;
@@ -10,15 +13,12 @@ import edu.uci.ics.jung.graph.DirectedSparseGraph;
 
 /**
  * @author esther
- *
+ *BooleanNetwork is based only in REG type of interaction
  */
 @SuppressWarnings("serial")
 public class BooleanNetwork extends DirectedSparseGraph<Gene,REG>{
+	
 	private ArrayList<REG> setOfReg;
-	private ArrayList<Gene> vertex;
-	int numberGenes;
-	int i = 0;
-	HashMap<Gene, Boolean> keepAttractor;
 	
 	public BooleanNetwork (ArrayList<REG> setOfReg){
 		this.setOfReg = setOfReg;
@@ -27,10 +27,6 @@ public class BooleanNetwork extends DirectedSparseGraph<Gene,REG>{
 		for (REG reg:setOfReg){
 			this.addEdge(reg,reg.getGene1(),reg.getGene2());
 		}
-		
-		vertex = (ArrayList<Gene>) this.getVertices();
-		numberGenes = vertex.size();
-		keepAttractor = new HashMap<>();
 	}
 	
 	public ArrayList<REG> getSetOfReg() {
@@ -48,16 +44,6 @@ public class BooleanNetwork extends DirectedSparseGraph<Gene,REG>{
 		return map;
 	}
 	
-	public void findSingleAttractors(HashMap<Gene, Boolean> initialState, int g){
-			Gene gene = vertex.get(g);
-			Boolean nextState = getGeneNexState(initialState,gene);
-			if (nextState==initialState.get(gene)){
-				keepAttractor.put(gene,nextState);
-			}
-		
-		boolean f = false;
-		
-	}
 	/**
 	 * 
 	 * */
@@ -87,10 +73,5 @@ public class BooleanNetwork extends DirectedSparseGraph<Gene,REG>{
 	
 	}
 
-
-
-	
-	
-	
-	
+		
 }

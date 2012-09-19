@@ -1,9 +1,12 @@
 package testes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import br.unesp.ibb.lbbc.control.BooleanNetwork;
+import br.unesp.ibb.lbbc.control.DamageReg;
 import br.unesp.ibb.lbbc.model.Gene;
 import br.unesp.ibb.lbbc.model.REG;
 
@@ -68,17 +71,18 @@ public class TestaBoolean {
 		estados.put(g4,true);
 		estados.put(g5,true);
 		
-		HashMap<Gene,Boolean> novoEstado = bn.getNetworkNextState(estados);
-		
-		for (Gene gene:novoEstado.keySet()){
-			System.out.println(gene.getCOMMONNAME()+"  "+novoEstado.get(gene));
-		}
-		
+		DamageReg dam = new DamageReg();
+		double damage1 = dam.getDamageReg(bn,g1);
+		System.out.println(damage1);
+		double damage2 = dam.getDamageReg(bn,g2);
+		System.out.println(damage2);
+		double damage3 = dam.getDamageReg(bn,g3);
+		System.out.println(damage3);
+		double damage4 = dam.getDamageReg(bn,g4);
+		System.out.println(damage4);
+		double damage5 = dam.getDamageReg(bn,g5);
+		System.out.println(damage5);
 	}
-	
-	
-	
-	
 	
 	public static void main(String[] args) {
 		TestaBoolean t = new TestaBoolean();
