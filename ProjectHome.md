@@ -1,0 +1,1 @@
+Through this software it is possible to calculate the damage when deleting a gene from the regulational gene network and use these data as training attribute if we have the class of the genes.
